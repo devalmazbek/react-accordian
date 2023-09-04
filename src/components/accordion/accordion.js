@@ -1,12 +1,23 @@
-import AccordianItem from "../accordion-item/accordion-item";
+import { useState } from "react";
+import AccordionItem from "../accordion-item/accordion-item";
 import { faqs } from "../../data/data";
 
 function Accordian() {
-  let number = 1;
+  const [isVisibleContent, setIsVisibleContent] = useState(null);
   return (
     <div className="accordion">
       {faqs.map((item, number) => {
-        return <AccordianItem item={item} key={number} number={number} />;
+        return (
+          <AccordionItem
+            item={item}
+            key={number}
+            number={number}
+            isVisibleContent={isVisibleContent}
+            onOpen={setIsVisibleContent}
+          >
+            {item.text}
+          </AccordionItem>
+        );
       })}
     </div>
   );

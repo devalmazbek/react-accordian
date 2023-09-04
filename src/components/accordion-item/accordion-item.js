@@ -1,22 +1,25 @@
-import { useState } from "react";
-
-function AccordianItem({ item: { title, text }, number }) {
-  const [isVisibleContent, setIsVisibleContent] = useState(false);
-
+function AccordionItem({
+  item: { title },
+  number,
+  isVisibleContent,
+  onOpen,
+  children,
+}) {
+  const currentOpen = number === isVisibleContent;
   function handleToggle() {
-    setIsVisibleContent((isVisibleContent) => !isVisibleContent);
+    onOpen(currentOpen ? null : number);
   }
 
-  const style = `item ${isVisibleContent ? "open" : ""}`;
+  const style = `item ${currentOpen ? "open" : ""}`;
 
   return (
     <div className={style} onClick={handleToggle}>
       <p className="number">{number < 9 ? `0${number + 1}` : number + 1}</p>
       <p className="title">{title}</p>
-      <p className="icon">{isVisibleContent ? "-" : "+"}</p>
-      {isVisibleContent ? <div className="content-box">{text}</div> : null}
+      <p className="icon">{currentOpen ? "-" : "+"}</p>
+      {currentOpen ? <div className="content-box">{children}</div> : null}
     </div>
   );
 }
 
-export default AccordianItem;
+export default AccordionItem;
